@@ -7,7 +7,8 @@ import { useEffect, useState } from 'react'
 import { getapost } from '@/actions/useractions'
 import Nestedcomments from '@/components/Nestedcomments'
 import { randomposts, addcomments, addlikes, deletepost, fetchpost, sortpost, getallcomments, checkfollow, updatebookmark, followinglist, sharepost } from "@/actions/useractions";
-const page = () => {
+import { Suspense } from 'react'
+function Createpost() {
     const searchparams = useSearchParams()
     const pid = searchparams.get("postId")
     const postid = decodeURIComponent(pid)
@@ -345,4 +346,8 @@ const page = () => {
     )
 }
 
-export default page
+export default function page(){
+    <Suspense fallback={<div>Loading...</div>}>
+        <Createpost/>
+    </Suspense>
+}

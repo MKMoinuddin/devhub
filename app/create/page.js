@@ -3,46 +3,43 @@ import { useSession } from 'next-auth/react'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { add, findbyid } from '@/actions/useractions'
-import { ToastContainer, toast, Bounce } from 'react-toastify';
+ 
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
-import { fetchpost } from '@/actions/useractions'
+ 
 import Link from 'next/link'
 const page = () => {
     const { data: session } = useSession()
     const router = useRouter()
     const searchParams = useSearchParams()
 
-    // const [form, setform] = useState({
-    //     title: "",
-    //     bio: [""],
-    //     pic: [""]
-    // })
+   
     const [title, settitle] = useState("")
     const [bio, setbio] = useState([""])
     const [pic, setpic] = useState([""])
 
-    const [data, setdata] = useState([])
+    
     useEffect(() => {
         if (session?.user?.name) {
             const id = searchParams.get("id")
+            if(id){
             editcomment(id)
+            }
         }
     }, [session])
 
     const editcomment = async (id) => {
+        try{
         let post = await findbyid(id)
-        // setdata(u)
-
-        // const post = u.find(p =>
-        //     p._id === id
-        // )
         
         if (post) {
            settitle(post.title)
            setbio(post.bio)
            setpic(post.pic)
         }
+    }catch(err){
+        console.log(err)
+    }
 
     }
 
@@ -65,25 +62,6 @@ const page = () => {
         console.log(title,bio,pic)
         const got = await add(session?.user?.name, session?.user?.image, title,bio,pic, done)
 
-        // if (got.success) {
-
-        //     toast.success('🦄 Post added successfully!', {
-        //         position: "top-right",
-        //         autoClose: 5000,
-        //         hideProgressBar: false,
-        //         closeOnClick: false,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //         theme: "light",
-        //         transition: Bounce,
-        //     });
-        //     setform({
-        //         title: "",
-        //         bio: "",
-        //         pic: ""
-        //     })
-        // }
         settitle("")
         setbio([""])
         setpic([""])
@@ -102,19 +80,7 @@ const page = () => {
 
     return (
         <>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
+           
             <div>
 
                 <h1 className='text-2xl font-bold my-5 text-center'>Create the Post You Like</h1>
@@ -157,12 +123,12 @@ const page = () => {
                         </div>
                     </div>
                     <div className='flex gap-5'>
-                        <button onClick={() => { handlesubmit(true) }} disabled={title?.length < 5 } className="disabled:to-red-600 disabled:from-green-400 w-30 rounded-md relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-linear-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                        <button type='button' onClick={() => { handlesubmit(true) }} disabled={title?.length < 5 } className="disabled:to-red-600 disabled:from-green-400 w-30 rounded-md relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-linear-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                             <span className=" relative px-4 py-2.5 transition-all ease-in duration-75 bg-neutral-primary-soft rounded-base group-hover:bg-transparent group-hover:dark:bg-transparent leading-5">
                                 Save the post
                             </span>
                         </button>
-                        <button onClick={() => { handlesubmit(false) }} disabled={title?.length <5} className="disabled:to-red-600 w-30 disabled:from-green-400 rounded-md relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-linear-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                        <button type='button' onClick={() => { handlesubmit(false) }} disabled={title?.length <5} className="disabled:to-red-600 w-30 disabled:from-green-400 rounded-md relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-linear-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                             <span className=" relative px-4 py-2.5 transition-all ease-in duration-75 bg-neutral-primary-soft rounded-base group-hover:bg-transparent group-hover:dark:bg-transparent leading-5">
                                 Draft the post
                             </span>

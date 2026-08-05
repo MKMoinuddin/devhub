@@ -36,7 +36,7 @@ const page = () => {
 
   const [userdata, setuserdata] = useState({})
   useEffect(() => {
-    console.log(username, profilepic)
+    
     getuser(username)
   }, [username, session])
   const getuser = async (username) => {
@@ -107,7 +107,7 @@ const page = () => {
     // });
     // setisbookmark(bookmarkstate)
     const list = await retrieveshares(username)
-    console.log(list)
+   
     setshared(list)
     setsharecount(sharecount + list?.length)
 
@@ -228,7 +228,7 @@ const page = () => {
       [id]: !prev[id]
     }))
     const list = await followinglist(username, postusername)
-    console.log(list)
+ 
     setflist(prev => ({
       ...prev,
       [id]: list

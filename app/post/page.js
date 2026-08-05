@@ -32,8 +32,7 @@ function Createpost() {
     const username = session?.user?.name
     useEffect(() => {
         getdata()
-        console.log("session is", session)
-
+         
     }, [session, status, postid])
     useEffect(() => {
         if (oncomment) {
@@ -49,7 +48,7 @@ function Createpost() {
     const getdata = async () => {
         const data = await getapost(postid, username)
         setd(data)
-        console.log(data)
+      
 
         setisbookmark(data.isbookmark)
 
@@ -110,14 +109,14 @@ function Createpost() {
     }
     const handlebookmark = async (id) => {
         if (isbookmark) {
-            console.log(isbookmark)
+           
 
             await updatebookmark(id, isbookmark, session?.user?.name)
             setisbookmark(!isbookmark)
 
         }
         else {
-            console.log(isbookmark)
+           
             await updatebookmark(id, isbookmark, username)
             setisbookmark(!isbookmark)
 
@@ -131,7 +130,7 @@ function Createpost() {
             [id]: !prev[id]
         }))
         const list = await followinglist(username, postusername)
-        console.log(list)
+       
         setflist(prev => ({
             ...prev,
             [id]: list
@@ -155,7 +154,7 @@ function Createpost() {
     }
     const sendpost = async () => {
         const selected = []
-        console.log("selected is ", selected)
+       
         Object.entries(sharedusers).forEach(([postid, users]) => {
             Object.entries(users).forEach(([user, value]) => {
                 if (value == true) {

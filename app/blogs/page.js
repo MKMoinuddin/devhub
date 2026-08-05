@@ -23,9 +23,7 @@ const page = () => {
         c => c.parentCommentId === null
     );
     useEffect(() => {
-        console.log("comment data", commentdata)
-        console.log("root comments", rootcomments)
-
+       
     }, [commentdata])
 
 
@@ -113,7 +111,7 @@ const page = () => {
 
 
         setoncomment(id)
-        console.log("afg")
+       
         let c = await getallcomments(id)
         setcommentdata(c)
 
@@ -143,11 +141,11 @@ const page = () => {
         setsearch(value)
         if (value == "") {
             getdata(session?.user?.name)
-            console.log(session?.user?.name)
+            
         }
         else {
             setfilter(data.filter(post => post.title.toLowerCase().includes(value.toLowerCase())))
-            console.log(filter)
+          
         }
     }
     const handlecomments = async (id, username, text, pic) => {

@@ -33,7 +33,7 @@ export default function Home() {
         if (status == "unauthenticated") {
             router.push("/login")
         }
-        console.log("session is ", session, "status is", status)
+        
         getdata()
     }, [session, router])
     useEffect(() => {
@@ -52,7 +52,7 @@ export default function Home() {
         let c = await randomposts(username)
         setdata(c)
         setfilter(c)
-        console.log(c)
+        
         const bookmarkstate = {}
         c.forEach(e => {
             bookmarkstate[e._id] = e.isbookmark
@@ -155,11 +155,11 @@ export default function Home() {
         setsearch(value)
         if (value == "") {
             getdata(session?.user?.name)
-            console.log(session?.user?.name)
+           
         }
         else {
             setfilter(data.filter(post => post.title.toLowerCase().includes(value.toLowerCase())))
-            console.log(filter)
+           
         }
     }
     const handlecomments = async (id, username, text, pic) => {
@@ -209,7 +209,7 @@ export default function Home() {
             [id]: !prev[id]
         }))
         const list = await followinglist(username, postusername)
-        console.log(list)
+       
         setflist(prev => ({
             ...prev,
             [id]: list
@@ -233,7 +233,7 @@ export default function Home() {
     }
     const sendpost = async () => {
         const selected = []
-        console.log("selected is ", selected)
+  
         Object.entries(sharedusers).forEach(([postid, users]) => {
             Object.entries(users).forEach(([user, value]) => {
                 if (value == true) {

@@ -10,10 +10,7 @@ import { Fascinate_Inline } from "next/font/google"
 export const add = async (username, profilepic, title, bio, pic, done) => {
 
     await connectDb()
-    console.log("bio:", bio);
-    console.log("Array.isArray(bio):", Array.isArray(bio));
-    console.log("bio.length:", bio.length);
-    console.log("bio[0]:", bio[0]);
+    
     let newpost = await post.create({ username, profilepic, title: title, bio: bio, pic: pic, likes: 0, done: done })
     if (done) {
         await user.findOneAndUpdate({ username: username }, { $inc: { posts: 1 } })
@@ -24,16 +21,6 @@ export const fetchpost = async (username) => {
 
     await connectDb()
     let getpost = await post.find({ username: username }).lean()
-
-    // let afterpost = getpost.map(p => ({
-    //     ...p,
-    //     _id: p._id.toString(),
-
-    //         createdAt: p.createdAt?.toISOString(),
-    //     updatedAt: p.updatedAt?.toISOString()
-
-    // }))
-    //console.log(afterpost)
     return JSON.parse(JSON.stringify(getpost))
 }
 export const randomposts = async (username) => {
@@ -252,7 +239,7 @@ export const unfollowuser = async (wantstofollow, picwantstofollow, follow, picf
     )
 }
 export const updatebookmark = async (id, isbookmark, username) => {
-    console.log(isbookmark)
+    
     if (isbookmark) {
         await user.findOneAndUpdate(
             { username: username },
@@ -308,7 +295,7 @@ export const followinglist = async (username, postusername) => {
             olist.push({ username: e.username, pic: e.profilepic })
         }
     });
-    console.log(olist)
+    
     return olist
 
 
@@ -352,10 +339,9 @@ export const getapost = async (postid, username) => {
     const postdata = await post.findOne({ _id: postid }).lean()
 
     const userdetails = await user.findOne({ username: username })
-    console.log(userdetails)
-    console.log(userdetails.bookmarkedposts)
+   
     const isbookmark = userdetails.bookmarkedposts.some(f => f.postId?.toString() === postid?.toString())
-    console.log(isbookmark)
+  
 
     return {
         ...postdata,

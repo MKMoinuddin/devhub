@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if (!user) {
                     return null;
                 }
-                console.log("user details are",user)
+                
                 
                 return {
                     id: user._id.toString(),
@@ -47,7 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async signIn({ user, account, profile }) {
             if (account.provider === "google") {
 
-                console.log(profile.email_verified);
+                
 
                 await connectDb();
                 const exists = await User.findOne({
@@ -65,9 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return profile.email_verified && profile.email.endsWith("@gmail.com")
             }
             if (account.provider == "github") {
-                console.log(profile.login);
-                console.log(user.name);
-                console.log(user.email);
+                
 
             }
 

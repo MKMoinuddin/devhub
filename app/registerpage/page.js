@@ -19,7 +19,7 @@ const page = () => {
           redirect:true,
           callbackUrl:"/"
         })
-        console.log("dashj")
+       
 
     }
 

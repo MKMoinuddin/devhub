@@ -59,7 +59,7 @@ function Createpost() {
         }
     }
     const handlesubmit = async (done) => {
-        console.log(title, bio, pic)
+       
         const got = await add(session?.user?.name, session?.user?.image, title, bio, pic, done)
 
         settitle("")

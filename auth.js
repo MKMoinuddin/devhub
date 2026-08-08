@@ -6,7 +6,7 @@ import GitHub from "next-auth/providers/github";
 import connectDb from "./db/connectDb";
 import User from "./app/models/user";
 import Credentials from "next-auth/providers/credentials";
-console.log("AUTH_SECRET EXISTS:  ", !!process.env.AUTH_SECRET);
+console.log("AUTH_SECRET EXISTS: it is the ", !!process.env.AUTH_SECRET);
 export const { handlers, signIn, signOut, auth } = NextAuth({
     secret: process.env.AUTH_SECRET,
     providers: [
